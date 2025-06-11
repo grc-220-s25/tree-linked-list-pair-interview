@@ -32,8 +32,62 @@ public class BlueQ2 {
      * @return "list" if the list has a bigger range, "tree" otherwise
      */
     public static String biggerRange(ListNode head, TreeNode root) {
-        return null;
+        int listMin = head.data, listMax = head.data;
+        ListNode curr = head.next;
+        while (curr != null) {
+            if (curr.data < listMin) listMin = curr.data;
+            if (curr.data > listMax) listMax = curr.data;
+            curr = curr.next;
+        }
+        int listRange = listMax - listMin; 
+        int treeMin = treeMin(root);
+        int treeMax = treeMax(root);
+        int treeRange = treeMax - treeMin;
+
+        return listRange > treeRange ? "list" : "tree";
     }
 
+    private static int treeMin(TreeNode node) {
+        if (node == null) return Integer.MAX_VALUE;
+        int leftMin = treeMin(node.left);
+        int rightMin = treeMin(node.right);
+        int min = node.data;
+        min = Math.min(min, leftMin);
+        min = Math.min(min, rightMin);
+        return min;
+    }
 
+    private static int treeMax(TreeNode node) {
+        if (node == null) return Integer.MIN_VALUE;
+        int leftMax = treeMax(node.left);
+        int rightMax = treeMax(node.right);
+        int max = node.data;
+        max = Math.max(max, leftMax);
+        max = Math.max(max, rightMax);
+        return max;
+    }
 }
+
+
+
+    
+
+   
+
+
+
+// int listMinimum = head.data;
+// int listMaximum = head.data;
+
+// ListNode curr = head.next;
+// while (curr != null) {
+//     if (curr.data < listMinimum) listMinimum = curr.data;
+//     if (curr.data > listMaximum) listMaximum = curr.data;
+//     curr = curr.next;
+// }
+// int listRange = listMaximum - listMinimum;
+
+// int[] treeMinMax = biggerRange(root);
+// int treeRange = treeMinMax[1] - treeMinMax[0];
+// return listRange > treeRange ? "list" : "tree";
+// }
